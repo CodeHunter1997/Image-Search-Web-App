@@ -1,16 +1,17 @@
-const accesskey = "8JkhW4O09FoekCTG3QZNuU03irPsbb7U0zODwdjDx1A";
+const accessKey = "ofFCZnUZLe0uFWhU266ik28RoAhSMEBczp5mgZNLkrE";
 
-const search = document.querySelector("form");
-const input = document.getElementById("search-input");
-const searchResults = document.querySelector(".results");
-const showMore = document.getElementById("show-more");
+const formEl = document.querySelector("form");
+const inputEl = document.getElementById("search-input");
+const searchResults = document.querySelector(".search-results");
+const showMore = document.getElementById("show-more-button");
 
 let inputData = "";
 let page = 1;
 
 async function searchImages() {
-    inputData = input.value;
-    const url = 'https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${accessKey}';
+    inputData = inputEl.value;
+    const url = `https://api.unsplash.com/search/photos?page=${page}&query=${inputData}&client_id=${accessKey}`;
+
 
     const response = await fetch(url);
     const data = await response.json();
@@ -24,7 +25,7 @@ async function searchImages() {
     results.map((result) =>{
         const imageWrapper = document.createElement('div');
         imageWrapper.classList.add("search-result");
-        const image = document.createComment('img');
+        const image = document.createElement('img');
         image.src = result.urls.small;
         image.alt = result.alt_description;
         const imageLink = document.createElement('a');
@@ -45,7 +46,7 @@ async function searchImages() {
 
 }
 
-search.addEventListener("submit", (event)=>{
+formEl.addEventListener("submit", (event)=>{
     event.preventDefault()
     page = 1;
     searchImages()
